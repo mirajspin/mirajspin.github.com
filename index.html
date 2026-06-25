@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MirajParfume - Premium Lucky Spin</title>
+    <style>
+        /* Premium Mobil və Şüşəvari (Glassmorphism) Effektlər */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1f083d 0%, #080210 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.02);
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #fff 30%, #e6be67 70%, #b38728 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        /* Qiymət Daxiletmə Paneli (Mobil Üçün Geniş və Rahat) */
+        .input-group {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 14px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(214, 175, 55, 0.15);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #e6be67;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* iOS-da ekranın böyüməməsi üçün minimum 16px font-size mütləqdir */
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: #11091c;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #e6be67;
+            box-shadow: 0 0 15px rgba(230, 190, 103, 0.25);
+            background: #180d26;
+        }
+
+        /* Tam Cavabdeh (Responsive) Çarx Dünyası */
+        .wheel-outer-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            aspect-ratio: 1;
+            margin: 0 auto 25px auto;
+            padding: 10px;
+            background: radial-gradient(circle, rgba(230,190,103,0.15) 0%, rgba(0,0,0,0) 70%);
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .arrow {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 14px solid transparent;
+            border-right: 14px solid transparent;
+            border-top: 28px solid #e6be67;
+            z-index: 10;
+            filter: drop-shadow(0 4px 10px rgba(230, 190, 103, 0.6));
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 6px solid #e6be67;
+            background: #0f051d;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(230, 190, 103, 0.2);
+            display: block;
+        }
+
+        .center-circle {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            background: radial-gradient(circle, #fff 0%, #e6be67 60%, #b38728 100%);
+            border-radius: 50%;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            border: 2px solid #11091c;
+            box-shadow: 0 0 15px rgba(230, 190, 103, 0.8), 0 4px 8px rgba(0,0,0,0.5);
+        }
+
+        /* Böyük, Rahat Toxunula Bilən Düymə */
+        .spin-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #fce0ad 0%, #e6be67 50%, #b38728 100%);
+            border: none;
+            color: #080210;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(230, 190, 103, 0.25);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .spin-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 3px 10px rgba(230, 190, 103, 0.2);
+        }
+
+        .spin-btn:disabled {
+            background: linear-gradient(135deg, #444, #222);
+            color: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Möhtəşəm Pop-up Modalı */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 2, 8, 0.9);
+            z-index: 100;
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal.show { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: radial-gradient(circle at top, #2d1254 0%, #110524 100%);
+            border: 2px solid #e6be67;
+            padding: 30px 20px;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 360px;
+            width: 100%;
+            box-shadow: 0 0 40px rgba(230, 190, 103, 0.4);
+            transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal.show .modal-content { transform: scale(1); }
+        .modal-content h2 { color: #e6be67; font-size: 2rem; margin-bottom: 10px; font-weight: 800; }
+        .modal-content p { font-size: 1.1rem; margin-bottom: 25px; line-height: 1.6; color: #fff; }
+        
+        .close-btn {
+            background: #fff; color: #080210; border: none;
+            padding: 12px 35px; font-size: 1rem; font-weight: 700; border-radius: 12px;
+            cursor: pointer; transition: all 0.2s; width: 100%;
+            box-shadow: 0 4px 12px rgba(255,255,255,0.15);
+        }
+        .close-btn:active { background: #e6be67; transform: scale(0.98); }
+
+        canvas#confettiCanvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 99;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>MirajParfume</h1>
+        <p class="subtitle">Premium Müştəri Sadiqlik Sistemi</p>
+
+        <div class="input-group">
+            <label for="purchaseAmount">Alış-veriş məbləği (AZN):</label>
+            <input type="number" id="purchaseAmount" inputmode="decimal" placeholder="Məbləği yazın..." min="1">
+        </div>
+
+        <div class="wheel-outer-wrapper">
+            <div class="wheel-container">
+                <div class="arrow"></div>
+                <canvas id="wheelCanvas" class="wheel" width="360" height="360"></canvas>
+                <div class="center-circle"></div>
+            </div>
+        </div>
+
+        <button class="spin-btn" id="spinBtn" onclick="processSmartSpin()">Çarxi Firlat</button>
+    </div>
+
+    <!-- Nəticə Modalı -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <h2>Təbriklər! 🎉</h2>
+            <p id="prizeText"></p>
+            <button class="close-btn" onclick="closeModal()">Əla, Aktivləşdir!</button>
+        </div>
+    </div>
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const spinBtn = document.getElementById('spinBtn');
+        const modal = document.getElementById('resultModal');
+        const prizeText = document.getElementById('prizeText');
+        const amountInput = document.getElementById('purchaseAmount');
+
+        // TAM 12 ƏDƏD QURGUSAL DIZAYN
+        const prizes = [
+            "10% Endirim",         // Index 0
+            "10 ml Armani Si",     // Index 1
+            "15% Endirim",         // Index 2
+            "10 ml Polo Blue",     // Index 3
+            "20% Endirim",         // Index 4
+            "Sürpriz Mini Ətir",   // Index 5
+            "25% Endirim",         // Index 6
+            "10 ml Tom Ford",      // Index 7
+            "40% Endirim",         // Index 8
+            "Pulsuz Çatdırılma",    // Index 9
+            "50% Endirim",         // Index 10
+            "Brend Tester"         // Index 11
+        ];
+
+        // Lüks rəng harmoniyası (Tünd bənövşəyi, dərin obsidian və qızılı neonlar)
+        const colors = [
+            "#1c093a", "#0f0422", "#e6be67", "#250d4d", 
+            "#b38728", "#120624", "#1c093a", "#0f0422", 
+            "#e6be67", "#250d4d", "#b38728", "#120624"
+        ];
+        
+        const numSegments = prizes.length;
+        const segmentAngle = 360 / numSegments;
+        
+        // Səs Sintez Sistemi (Web Audio API)
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playTickSound() {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(420, audioCtx.currentTime); // Çıqqıltı tezliyi
+            osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.04);
+            
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.04);
+        }
+
+        function playWinSound() {
+            if (!audioCtx) return;
+            const notes = [261.63, 329.63, 392.00, 523.25]; // C major akkordu
+            notes.forEach((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.1);
+                
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.1 + 0.5);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(audioCtx.currentTime + index * 0.1);
+                osc.stop(audioCtx.currentTime + index * 0.1 + 0.5);
+            });
+        }
+
+        function drawWheel() {
+            const radius = canvas.width / 2;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < numSegments; i++) {
+                const angleRad = (i * segmentAngle * Math.PI) / 180;
+                const nextAngleRad = ((i + 1) * segmentAngle * Math.PI) / 180;
+                
+                ctx.beginPath();
+                ctx.fillStyle = colors[i];
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angleRad, nextAngleRad);
+                ctx.lineTo(radius, radius);
+                ctx.fill();
+                
+                // İncə zərif ayrıcı xətlər
+                ctx.strokeStyle = "rgba(255,255,255,0.04)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Yazıların yerləşdirilməsi
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angleRad + (segmentAngle * Math.PI) / 360);
+                ctx.textAlign = "right";
+                
+                // Qızılı dilimlərdə yazını tünd rəng edirik ki, oxunsun
+                ctx.fillStyle = (colors[i] === "#e6be67" || colors[i] === "#b38728") ? "#080210" : "#fff";
+                ctx.font = "bold 13px sans-serif";
+                ctx.fillText(prizes[i], radius - 18, 5);
+                ctx.restore();
+            }
+        }
+
+        drawWheel();
+
+        // AĞILLI SİSTEM FILTRI
+        function processSmartSpin() {
+            initAudio(); // İstifadəçi toxunuşu ilə səsi aktivləşdiririk
+            
+            const amount = parseFloat(amountInput.value);
+            if (isNaN(amount) || amount <= 0) {
+                alert("Zəhmət olmasa, əvvəlcə müştərinin aldığı alverin qiymətini (AZN) daxil edin!");
+                return;
+            }
+
+            let validIndexes = [];
+
+            if (amount >= 1 && amount < 10) {
+                validIndexes = [0]; // 10% endirim
+            } 
+            else if (amount >= 10 && amount <= 25) {
+                validIndexes = [2, 4]; // 15% və ya 20% endirim
+            } 
+            else if (amount > 25 && amount < 100) {
+                validIndexes = [1, 3, 6, 8]; // 25%, 40% və ya 10 ml Armani Si / Polo Blue
+            } 
+            else if (amount >= 100 && amount <= 200) {
+                validIndexes = [10]; // 50% endirim
+            } 
+            else {
+                validIndexes = [1, 3, 7, 8, 10, 11]; // >200 AZN üstün hədiyyələr
+            }
+
+            const targetIndex = validIndexes[Math.floor(Math.random() * validIndexes.length)];
+            executeSmoothSpin(targetIndex);
+        }
+
+        // JS RAF ilə Animasiya və Səs Sinxronizasiyası
+        function executeSmoothSpin(targetIndex) {
+            spinBtn.disabled = true;
+            amountInput.disabled = true;
+
+            // Hədəf dilimin tam mərkəzini yuxarıdakı oxa (270 dərəcə) gətirəcək yekun bucaq
+            const targetSegmentCenter = (targetIndex * segmentAngle) + (segmentAngle / 2);
+            const stopAngle = (360 - targetSegmentCenter + 270) % 360;
+            
+            const minTurns = 5; 
+            const totalRotationToGo = (minTurns * 360) + stopAngle;
+            
+            let startTime = null;
+            const duration = 5000; // Tam fırlanma müddəti (5 saniyə)
+            let lastTrackedSegment = -1;
+
+            // Kübik əyləcləmə düsturu (Sürətlə başlayıb, zərifcə dayanmaq üçün)
+            function easeOutCubic(t) {
+                return [--t * t * t + 1][0];
+            }
+
+            function animate(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const currentAngle = totalRotationToGo * easeOutCubic(progress);
+                
+                // Çarxı vizual olaraq fırlat
+                canvas.style.transform = `rotate(${currentAngle}deg)`;
+
+                // Səs çıqqıltısının hesablanması (Hər seqment keçidində çıqqıldasın)
+                const currentSegmentIdx = Math.floor((currentAngle % 360) / segmentAngle);
+                if (currentSegmentIdx !== lastTrackedSegment && progress < 0.98) {
+                    playTickSound();
+                    lastTrackedSegment = currentSegmentIdx;
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    // Animasiya bitdi
+                    setTimeout(() => {
+                        playWinSound();
+                        prizeText.innerHTML = `Bu alış-veriş kateqoriyasına uyğun olaraq qazanılan uduş:<br><br><strong style="color: #e6be67; font-size: 1.5rem; text-shadow: 0 0 10px rgba(230,190,103,0.3)">🌟 ${prizes[targetIndex]} 🌟</strong>`;
+                        modal.classList.add('show');
+                        startConfetti();
+                    }, 300);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+            spinBtn.disabled = false;
+            amountInput.disabled = false;
+            stopConfetti();
+        }
+
+        /* --- Optimizasiya Edilmiş Konfeti Sistemi --- */
+        const confettiCanvas = document.getElementById('confettiCanvas');
+        const confettiCtx = confettiCanvas.getContext('2d');
+        let confettiArray = [];
+        let animationFrame;
+
+        function startConfetti() {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+            confettiArray = [];
+            for (let i = 0; i < 60; i++) {
+                confettiArray.push({
+                    x: Math.random() * confettiCanvas.width,
+                    y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+                    r: Math.random() * 5 + 3,
+                    d: Math.random() * confettiCanvas.height,
+                    colorStr: ['#e6be67', '#ffffff', '#b38728', '#a262f7'][Math.floor(Math.random() * 4)],
+                    tilt: Math.random() * 10 - 5
+                });
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            confettiArray.forEach((p, index) => {
+                p.y += Math.cos(p.d) + 1.5 + p.r / 2;
+                p.tilt += 0.08;
+                confettiCtx.beginPath();
+                confettiCtx.lineWidth = p.r;
+                confettiCtx.strokeStyle = p.colorStr;
+                confettiCtx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                confettiCtx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                confettiCtx.stroke();
+
+                if (p.y > confettiCanvas.height) {
+                    confettiArray[index] = {
+                        x: Math.random() * confettiCanvas.width,
+                        y: -20,
+                        r: p.r,
+                        d: p.d,
+                        colorStr: p.colorStr,
+                        tilt: p.tilt
+                    };
+                }
+            });
+            animationFrame = requestAnimationFrame(animateConfetti);
+        }
+
+        function stopConfetti() {
+            cancelAnimationFrame(animationFrame);
+            confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        }
+
+        // Ekran ölçüsü dəyişəndə konfeti sahəsini yenilə
+        window.addEventListener('resize', () => {
+            if (modal.classList.contains('show')) {
+                confettiCanvas.width = window.innerWidth;
+                confettiCanvas.height = window.innerHeight;
+            }
+        });
+    </script>
+</body>
+</html>
