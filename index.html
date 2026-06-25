@@ -56,7 +56,7 @@
             font-weight: 400;
         }
 
-        /* Qiymət Daxiletmə Paneli (Mobil Üçün Geniş və Rahat) */
+        /* Qiymət Daxiletmə Paneli (Animasiyalı keçid və gizlənmə dəstəyi ilə) */
         .input-group {
             background: rgba(0, 0, 0, 0.3);
             padding: 14px;
@@ -64,6 +64,21 @@
             margin-bottom: 25px;
             border: 1px solid rgba(214, 175, 55, 0.15);
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 160px;
+            opacity: 1;
+            overflow: hidden;
+        }
+
+        /* Fırlanma zamanı bu klass aktivləşir və panel itir */
+        .input-group.hidden {
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border-color: transparent;
+            box-shadow: none;
         }
 
         .input-group label {
@@ -136,6 +151,9 @@
             background: #0f051d;
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(230, 190, 103, 0.2);
             display: block;
+            /* Mobil donmaların qarşısını almaq üçün GPU qatını məcburi aktiv edirik */
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .center-circle {
@@ -230,7 +248,7 @@
         <h1>MirajParfume</h1>
         <p class="subtitle">Premium Müştəri Sadiqlik Sistemi</p>
 
-        <div class="input-group">
+        <div class="input-group" id="inputWrapper">
             <label for="purchaseAmount">Alış-veriş məbləği (AZN):</label>
             <input type="number" id="purchaseAmount" inputmode="decimal" placeholder="Məbləği yazın..." min="1">
         </div>
@@ -246,7 +264,6 @@
         <button class="spin-btn" id="spinBtn" onclick="processSmartSpin()">Çarxi Firlat</button>
     </div>
 
-    <!-- Nəticə Modalı -->
     <div class="modal" id="resultModal">
         <div class="modal-content">
             <h2>Təbriklər! 🎉</h2>
@@ -264,6 +281,7 @@
         const modal = document.getElementById('resultModal');
         const prizeText = document.getElementById('prizeText');
         const amountInput = document.getElementById('purchaseAmount');
+        const inputWrapper = document.getElementById('inputWrapper');
 
         // TAM 12 ƏDƏD QURGUSAL DIZAYN
         const prizes = [
@@ -302,40 +320,45 @@
 
         function playTickSound() {
             if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(420, audioCtx.currentTime); // Çıqqıltı tezliyi
-            osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.04);
-            
-            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.04);
+            // Mobil cihazlarda köhnə proseslərin yığılıb qalmaması üçün try-catch tətbiq olunur
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(420, audioCtx.currentTime); 
+                osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.04);
+                
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.04);
+            } catch (e) { }
         }
 
         function playWinSound() {
             if (!audioCtx) return;
-            const notes = [261.63, 329.63, 392.00, 523.25]; // C major akkordu
-            notes.forEach((freq, index) => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.1);
-                
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.1);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.1 + 0.5);
-                
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(audioCtx.currentTime + index * 0.1);
-                osc.stop(audioCtx.currentTime + index * 0.1 + 0.5);
-            });
+            try {
+                const notes = [261.63, 329.63, 392.00, 523.25]; // C major akkordu
+                notes.forEach((freq, index) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.1);
+                    
+                    gain.gain.setValueAtTime(0.18, audioCtx.currentTime + index * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.1 + 0.5);
+                    
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(audioCtx.currentTime + index * 0.1);
+                    osc.stop(audioCtx.currentTime + index * 0.1 + 0.5);
+                });
+            } catch (e) { }
         }
 
         function drawWheel() {
@@ -410,6 +433,9 @@
         function executeSmoothSpin(targetIndex) {
             spinBtn.disabled = true;
             amountInput.disabled = true;
+            
+            // Giriş sahəsini zərif animasiya ilə gizlədirik
+            inputWrapper.classList.add('hidden');
 
             // Hədəf dilimin tam mərkəzini yuxarıdakı oxa (270 dərəcə) gətirəcək yekun bucaq
             const targetSegmentCenter = (targetIndex * segmentAngle) + (segmentAngle / 2);
@@ -434,8 +460,8 @@
                 
                 const currentAngle = totalRotationToGo * easeOutCubic(progress);
                 
-                // Çarxı vizual olaraq fırlat
-                canvas.style.transform = `rotate(${currentAngle}deg)`;
+                // Mobildə tam 60fps axıcılıq üçün translateZ(0) hər freymdə qorunur
+                canvas.style.transform = `rotate(${currentAngle}deg) translateZ(0)`;
 
                 // Səs çıqqıltısının hesablanması (Hər seqment keçidində çıqqıldasın)
                 const currentSegmentIdx = Math.floor((currentAngle % 360) / segmentAngle);
@@ -464,6 +490,9 @@
             modal.classList.remove('show');
             spinBtn.disabled = false;
             amountInput.disabled = false;
+            
+            // Giriş sahəsini geri qaytarırıq
+            inputWrapper.classList.remove('hidden');
             stopConfetti();
         }
 
